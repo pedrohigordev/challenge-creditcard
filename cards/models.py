@@ -1,5 +1,6 @@
+import uuid
+from typing import Any
 from django.db import models
-
 
 CARD_TYPES = (
     ('1', 'credit'),
@@ -16,6 +17,7 @@ CREDIT_CARD_FLAGS = (
 
 
 class Card(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     fancy_name = models.CharField(max_length=100, blank=True)
     type = models.CharField(max_length=20, choices=CARD_TYPES, default=1)
     exp_date = models.DateField()
@@ -26,5 +28,5 @@ class Card(models.Model):
     flag = models.CharField(
         max_length=20, choices=CREDIT_CARD_FLAGS, default=2)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.fancy_name if self.fancy_name else self.holder

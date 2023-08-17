@@ -5,4 +5,4 @@ from .models import Card
 
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'fancy_name', 'type', 'flag')
