@@ -3,16 +3,16 @@ from typing import Any
 from django.db import models
 
 CARD_TYPES = (
-    ('1', 'credit'),
-    ('2', 'debit')
+    ('credit', 'credit'),
+    ('debit', 'debit')
 )
 
 CREDIT_CARD_FLAGS = (
-    ('1', 'Visa'),
-    ('2', 'Mastercard'),
-    ('3', 'Elo'),
-    ('4', 'Dinners Club'),
-    ('5', 'American Express')
+    ('Visa', 'Visa'),
+    ('Mastercard', 'Mastercard'),
+    ('Elo', 'Elo'),
+    ('Dinners Club', 'Dinners Club'),
+    ('American Express', 'American Express')
 )
 
 
