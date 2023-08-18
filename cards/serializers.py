@@ -5,13 +5,12 @@ from .models import Card
 
 class CardSerializer(serializers.ModelSerializer):
     class Meta:
-        extra_kargs = {
+        extra_kwargs = {
             'number': {'write_only': True},
             'cvv': {'write_only': True}
         }
-
         model = Card
-        fields = {
+        fields = (
             'id',
             'fancy_name',
             'type',
@@ -20,4 +19,4 @@ class CardSerializer(serializers.ModelSerializer):
             'number',
             'cvv',
             'flag'
-        }
+        )
