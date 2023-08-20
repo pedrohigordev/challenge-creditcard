@@ -1,5 +1,6 @@
-from rest_framework import serializers
+import cryptocode
 from creditcard import CreditCard
+from rest_framework import serializers
 
 from .models import Card
 
@@ -22,8 +23,10 @@ class CardSerializer(serializers.ModelSerializer):
         number = validated_data['number']
 
         brand = self.get_card_brand(number)
+        number = self.encrypt_number_card(number)
 
         validated_data['brand'] = brand
+        validated_data['number'] = number
 
         return super().create(validated_data)
 
@@ -37,3 +40,9 @@ class CardSerializer(serializers.ModelSerializer):
         else:
             raise serializers.ValidationError(
                 'Invalid card number')
+
+    def encrypt_number_card(self, number):
+        key = '6df4eb0333050122c8ed21b896062be7'
+        number_encrypt = cryptocode.encrypt(number, key)
+
+        return number_encrypt
