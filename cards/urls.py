@@ -1,10 +1,8 @@
 from django.urls import path
+from rest_framework.routers import SimpleRouter
+
+from .views import CardViewSet
 
 
-from .views import CardApiViewCreateAndList, CardApiViewUpdateAndDelete
-
-
-urlpatterns = [
-    path('cards/', CardApiViewCreateAndList.as_view(), name='Cards'),
-    path('cards/<str:pk>/', CardApiViewUpdateAndDelete.as_view(), name='Card')
-]
+router = SimpleRouter()
+router.register('cards', CardViewSet)

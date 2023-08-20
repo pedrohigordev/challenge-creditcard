@@ -1,14 +1,10 @@
 from rest_framework import generics
+from rest_framework import viewsets
 
 from .models import Card
 from .serializers import CardSerializer
 
 
-class CardApiViewCreateAndList(generics.ListCreateAPIView):
-    queryset = Card.objects.all()
-    serializer_class = CardSerializer
-
-
-class CardApiViewUpdateAndDelete(generics.RetrieveDestroyAPIView):
+class CardViewSet(viewsets.ModelViewSet):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
