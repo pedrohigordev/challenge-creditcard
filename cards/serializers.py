@@ -7,8 +7,7 @@ from .models import Card
 class CardSerializer(serializers.ModelSerializer):
     class Meta:
         extra_kwargs = {
-            'number': {'write_only': True},
-            'cvv': {'write_only': True}
+            'brand': {'read_only': True},
         }
         model = Card
         fields = '__all__'
@@ -19,14 +18,22 @@ class CardSerializer(serializers.ModelSerializer):
                 'The holder field must have more than 2 characters')
         return value
 
-    def validate_number(self, value):
-        card_validate = CreditCard(value)
-        valid = card_validate.is_valid()
+    def create(self, validated_data):
+        number = validated_data['number']
 
-        if not valid:
+        brand = self.get_card_brand(number)
+
+        validated_data['brand'] = brand
+
+        return super().create(validated_data)
+
+    def get_card_brand(self, card_number):
+        card_brand = CreditCard(card_number)
+
+        valid = card_brand.is_valid()
+
+        if valid:
+            return card_brand.get_brand()
+        else:
             raise serializers.ValidationError(
                 'Invalid card number')
-        else:
-            brand = card_validate.get_brand()
-
-        return value

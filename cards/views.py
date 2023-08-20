@@ -10,7 +10,8 @@ class CardViewSet(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
     mixins.DestroyModelMixin,
-    viewsets.GenericViewSet
+    viewsets.GenericViewSet,
 ):
+
     queryset = Card.objects.all()
     serializer_class = CardSerializer
