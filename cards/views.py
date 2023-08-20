@@ -1,19 +1,14 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import generics
 
 from .models import Card
 from .serializers import CardSerializer
 
 
-class CardApiView(APIView):
-    def get(self, request):
-        cards = Card.objects.all()
-        serializer = CardSerializer(cards, many=True)
-        return Response(serializer.data)
+class CardApiViewCreateAndList(generics.ListCreateAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer
 
-    def post(self, request):
-        serializer = CardSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({"msg": "Created"}, status=status.HTTP_201_CREATED)
+
+class CardApiViewUpdateAndDelete(generics.RetrieveDestroyAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer
