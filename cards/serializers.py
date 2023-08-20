@@ -7,7 +7,26 @@ from datetime import datetime
 from .models import Card
 
 
+class ExpDateField(serializers.Field):
+    def to_representation(self, value):
+        return value.strftime('%m/%Y') if value else None,
+
+    def to_internal_value(self, value):
+        try:
+            month, year = value.split('/')
+            last_day_of_month = calendar.monthrange(int(year), int(month))[1]
+            exp_date = datetime(int(year), int(
+                month), last_day_of_month).date()
+
+            return exp_date
+        except (ValueError, IndexError):
+            raise serializers.ValidationError(
+                'Invalid date format')
+
+
 class CardSerializer(serializers.ModelSerializer):
+    exp_date = ExpDateField()
+
     class Meta:
         extra_kwargs = {
             'brand': {'read_only': True},
@@ -38,25 +57,17 @@ class CardSerializer(serializers.ModelSerializer):
 
         return number_encrypt
 
-    def format_exp_date(self, exp_date):
-        year = exp_date.year
-        month = exp_date.month
-        last_day_of_month = calendar.monthrange(year, month)[1]
-        formatted_date = datetime(
-            year, month, last_day_of_month).strftime('%Y-%m-%d')
-        return formatted_date
-
     def create(self, validated_data):
         number = validated_data['number']
 
         brand = self.get_card_brand(number)
         number = self.encrypt_number_card(number)
+        exp_date_fromated = validated_data['exp_date']
+
+        print(exp_date_fromated)
 
         validated_data['brand'] = brand
         validated_data['number'] = number
-
-        exp_date = validated_data.get('exp_date')
-        exp_date_formatted = self.format_exp_date(exp_date)
-        validated_data['exp_date'] = exp_date_formatted
+        validated_data['exp_date'] = exp_date_fromated
 
         return super().create(validated_data)
