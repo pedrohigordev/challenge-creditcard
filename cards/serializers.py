@@ -40,6 +40,17 @@ class CardSerializer(serializers.ModelSerializer):
                 'The holder field must have more than 2 characters')
         return value
 
+    def validate_cvv(self, value):
+        if value is None:
+            return value
+        if not isinstance(value, int):
+            raise serializers.ValidationError('CVV must be a numeric value')
+        cvv_str = str(value)
+        if len(cvv_str) < 3 or len(cvv_str) > 4:
+            raise serializers.ValidationError(
+                'CVV must have a length between 3 and 4 characters')
+        return value
+
     def get_card_brand(self, card_number):
         card_brand = CreditCard(card_number)
 
