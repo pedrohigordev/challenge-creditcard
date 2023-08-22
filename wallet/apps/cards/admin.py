@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Card
+from wallet.apps.cards.models import Card
 
 
 @admin.register(Card)

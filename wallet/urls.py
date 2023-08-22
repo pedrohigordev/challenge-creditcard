@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 
-from cards.urls import router
+from wallet.apps.cards.urls import router
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),

@@ -1,6 +1,3 @@
-import calendar
-from datetime import datetime
-
 import cryptocode
 from creditcard import CreditCard
 from rest_framework import serializers
@@ -8,48 +5,25 @@ from rest_framework import serializers
 from .models import Card
 
 
-class ExpDateField(serializers.Field):
-    def to_representation(self, value):
-        return value.strftime('%m/%Y') if value else None,
-
-    def to_internal_value(self, value):
-        try:
-            month, year = value.split('/')
-            last_day_of_month = calendar.monthrange(int(year), int(month))[1]
-            exp_date = datetime(int(year), int(
-                month), last_day_of_month).date()
-
-            return exp_date
-        except (ValueError, IndexError):
-            raise serializers.ValidationError(
-                'Invalid date format')
-
-
 class CardSerializer(serializers.ModelSerializer):
-    exp_date = ExpDateField()
-
     class Meta:
         extra_kwargs = {
             'brand': {'read_only': True},
         }
         model = Card
-        fields = '__all__'
+        fields = (
+            'id',
+            'brand',
+            'exp_date',
+            'holder',
+            'number',
+            'cvv'
+        )
 
     def validate_holder(self, value):
         if len(value) < 2:
             raise serializers.ValidationError(
                 'The holder field must have more than 2 characters')
-        return value
-
-    def validate_cvv(self, value):
-        if value is None:
-            return value
-        if not isinstance(value, int):
-            raise serializers.ValidationError('CVV must be a numeric value')
-        cvv_str = str(value)
-        if len(cvv_str) < 3 or len(cvv_str) > 4:
-            raise serializers.ValidationError(
-                'CVV must have a length between 3 and 4 characters')
         return value
 
     def get_card_brand(self, card_number):
@@ -74,12 +48,8 @@ class CardSerializer(serializers.ModelSerializer):
 
         brand = self.get_card_brand(number)
         number = self.encrypt_number_card(number)
-        exp_date_fromated = validated_data['exp_date']
-
-        print(exp_date_fromated)
 
         validated_data['brand'] = brand
         validated_data['number'] = number
-        validated_data['exp_date'] = exp_date_fromated
 
         return super().create(validated_data)
