@@ -1,3 +1,5 @@
+import calendar
+from datetime import datetime
 from rest_framework import serializers
 
 from .utils.libs.get_card_brand import get_card_brand
@@ -5,7 +7,41 @@ from .utils.libs.encrypt_card_number import encrypt_number_card
 from .models import Card
 
 
+class ExpDateField(serializers.Field):
+    def validate_date(self, date):
+        today = datetime.now().date()
+
+        received_date = datetime.strptime(date, '%Y-%m-%d').date()
+
+        if (received_date < today):
+            raise ValueError(
+                "Data is not in the format: DD/YYYY or is less than current data")
+
+        return date
+
+    def to_representation(self, validate_data):
+        return validate_data
+
+    def to_internal_value(self, date):
+
+        try:
+            month, year = date.split('/')
+            last_day_of_month = calendar.monthrange(int(year), int(month))[1]
+
+            date_formated = f'{year}-{month}-{last_day_of_month}'
+
+            self.validate_date(date_formated)
+
+            return date_formated
+
+        except ValueError:
+            raise serializers.ValidationError(
+                'Data is not in the format: DD/YYYY or is less than current data', )
+
+
 class CardSerializer(serializers.ModelSerializer):
+    exp_date = ExpDateField()
+
     class Meta:
         extra_kwargs = {
             'brand': {'read_only': True},
