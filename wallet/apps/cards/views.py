@@ -12,8 +12,6 @@ class TokenJWTView(TokenObtainPairView):
     pass
 
 
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
 class CardViewSet(
     mixins.CreateModelMixin,
     mixins.ListModelMixin,
@@ -21,6 +19,25 @@ class CardViewSet(
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet,
 ):
-
     queryset = Card.objects.all()
     serializer_class = CardSerializer
+
+    @authentication_classes([JWTAuthentication])
+    @permission_classes([IsAuthenticated])
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @authentication_classes([JWTAuthentication])
+    @permission_classes([IsAuthenticated])
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+
+    @authentication_classes([JWTAuthentication])
+    @permission_classes([IsAuthenticated])
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
+    @authentication_classes([JWTAuthentication])
+    @permission_classes([IsAuthenticated])
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
