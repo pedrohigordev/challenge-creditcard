@@ -56,6 +56,11 @@ class CardSerializer(serializers.ModelSerializer):
             'cvv'
         )
 
+    def validate_cvv(self, value):
+        if 3 > int(value) < 4:
+            raise serializers.ValidationError(
+                'The CVV must have 3 to 4 characters')
+
     def validate_holder(self, value):
         if len(value) < 2:
             raise serializers.ValidationError(
