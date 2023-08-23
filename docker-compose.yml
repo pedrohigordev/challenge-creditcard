@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  db:
+  postgres:
     image: postgres:latest
     container_name: miastodos_postgres
     environment:
