@@ -8,7 +8,7 @@ class Card(models.Model):
     brand = models.CharField(max_length=20)
     exp_date = models.DateField()
     holder = models.CharField(max_length=100)
-    number = models.CharField(max_length=16)
+    number = models.CharField(max_length=200)
     cvv = models.CharField(max_length=4, blank=True, null=True)
     created_at = models.DateField(auto_now_add=True)
 
