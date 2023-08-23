@@ -9,7 +9,7 @@ class Card(models.Model):
     exp_date = models.DateField()
     holder = models.CharField(max_length=100)
     number = models.CharField(max_length=16)
-    cvv = models.IntegerField(blank=True, null=True)
+    cvv = models.CharField(max_length=4, blank=True, null=True)
     created_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
