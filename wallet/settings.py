@@ -63,7 +63,7 @@ DATABASES = {
         'NAME': 'maistodos',
         'USER': 'postgres',
         'PASSWORD': 'maistodos',
-        'HOST': '172.21.0.2',
+        'HOST': 'postgres',
         'PORT': '5432',
     }
 }

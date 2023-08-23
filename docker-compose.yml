@@ -3,7 +3,7 @@ version: '3'
 services:
   postgres:
     image: postgres:latest
-    container_name: miastodos_postgres
+    container_name: maistodos_postgres
     environment:
       POSTGRES_DB: maistodos
       POSTGRES_USER: postgres
@@ -12,6 +12,14 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/maistodos
 
 volumes:
   pgdata:
