@@ -81,7 +81,7 @@ celerybeat.pid
 
 .env
 .venv
-.maistodos
+.venv-mais-todos
 env/
 venv/
 ENV/
