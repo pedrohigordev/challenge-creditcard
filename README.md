@@ -79,8 +79,8 @@ Para isso, você deve abrir uma nova aba no terminal executar o comando:
 docker exec -it challenge-backend-python-creditcard-web  /bin/bash
 ```
 
-- OBS: Caso não encontre o container, você deve executar o comando: docker ps
-       e substituir o challenge-backend-python-creditcard-web pelo nome do container que está em execução na sua máquina
+- OBS: Caso não encontre o container, você deve executar o comando: "docker ps"
+       e substituir o challenge-backend-python-creditcard-web pelo nome do container que está em execução na sua máquina é só procurar na coluna "NAMES" após a saída do comando "docker ps"
 
 - Já dentro do container, execute o comando: 
 
@@ -151,7 +151,12 @@ Após importar o arquivo no seu Insomnia você pode realizar as seguintes opera�
 #### [Search card](_.base_url/api/v1/cards/:ID):
     Vá até a aba Auth selecione a opção "Bearer Token" e cole o conteúdo de "access" no campo "TOKEN". Após isso, cole o ID, que pode ser obtido na listagem das rotas anteriores, substituda o ":ID", que está na rota acima, pelo ID que você copiou
 
-## ✒️ Autores
+
+### Caso você prefira realizar os testes via Swagger:
+Acesse a rota: http://localhost:8000/swagger/
+
+E realize o mesmo processo que expliquei a cima só que utilizando o Insomnia
+## ✒️ Autor
 
 - **Pedro Sousa** - _Desenvolvedor_ - [GitHub](https://github.com/pedrohigordev)
 
