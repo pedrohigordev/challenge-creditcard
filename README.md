@@ -85,7 +85,7 @@ docker exec -it challenge-backend-python-creditcard-web  /bin/bash
 - Já dentro do container, execute o comando: 
 
 ```
-pyhton3 manage.py createsuperuser
+python manage.py createsuperuser
 ```
 
 - Nas perguntas a seguir, você pode responder com o que eu vou sugerir:
