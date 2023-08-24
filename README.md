@@ -105,8 +105,11 @@ pyhton3 manage.py createsuperuser
 - Bypass password validation and create user anyway? [y/N]:
     - Digite: y
 
-Pronto, após todos esses passo, você estará com o super usuário configurado.
+Pronto, após todos esses passo, você estará com o super usuário configurado,
+agora sua aplicação está pronta para ser testada.
 
+
+### Testes
 ### Caso você prefira realizar os testes via Insomnia, é só realizar a importação do arquivo:
 
 - **[Insomnia](https://github.com/pedrohigor-life/challenge-mercafacil-backend-integration/blob/dev/tmp)**
