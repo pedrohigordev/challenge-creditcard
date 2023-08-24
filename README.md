@@ -76,7 +76,7 @@ Para isso, você deve abrir uma nova aba no terminal executar o comando:
 
 
 ```
-docker exec -it challenge-backend-python-creditcard-web  /bin/bash
+docker exec -it maistodos-web-1  /bin/bash
 ```
 
 - OBS: Caso não encontre o container, você deve executar o comando: "docker ps"
@@ -156,6 +156,24 @@ Após importar o arquivo no seu Insomnia você pode realizar as seguintes opera�
 Acesse a rota: http://localhost:8000/swagger/
 
 E realize o mesmo processo que expliquei a cima só que utilizando o Insomnia
+
+### Testes unitários e de integração
+
+Para isso, você deve abrir uma nova aba no terminal executar o comando: 
+
+
+```
+docker exec -it maistodos-web-1  /bin/bash
+```
+
+- OBS: Caso não encontre o container, você deve executar o comando: "docker ps"
+       e substituir o challenge-backend-python-creditcard-web pelo nome do container que está em execução na sua máquina é só procurar na coluna "NAMES" após a saída do comando "docker ps"
+
+- Já dentro do container, execute o comando: 
+
+```
+python manage.py test wallet.apps.cards
+```
 ## ✒️ Autor
 
 - **Pedro Sousa** - _Desenvolvedor_ - [GitHub](https://github.com/pedrohigordev)
