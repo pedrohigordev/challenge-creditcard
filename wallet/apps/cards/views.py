@@ -2,13 +2,17 @@ from rest_framework import mixins, viewsets
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .models import Card
 from .serializers import CardSerializer
 
 
 class TokenJWTView(TokenObtainPairView):
+    pass
+
+
+class TokenJWTRefreshView(TokenRefreshView):
     pass
 
 

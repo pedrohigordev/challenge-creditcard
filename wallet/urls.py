@@ -1,4 +1,5 @@
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.authentication import TokenAuthentication
+
 from django.contrib import admin
 from django.urls import include, path
 
@@ -9,7 +10,7 @@ from drf_yasg import openapi
 
 from wallet.apps.cards.urls import router
 
-from wallet.apps.cards.views import TokenJWTView
+from wallet.apps.cards.views import TokenJWTView, TokenRefreshView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -19,16 +20,17 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="pedrohigor.dev@gmail.com"),
         license=openapi.License(name="MIT License"),
     ),
+    authentication_classes=(TokenAuthentication,),
     public=True,
     permission_classes=(permissions.AllowAny,),
-    authentication_classes=(JWTAuthentication,),
 )
 
 
 urlpatterns = [
+    path('swagger/', schema_view.with_ui('swagger',
+         cache_timeout=0), name='schema-swagger-ui'),
     path('api/v1/token/', TokenJWTView.as_view(), name='token_jwt'),
+    path('api/v1/token/refresh', TokenRefreshView.as_view(), name='token_jwt'),
     path('api/v1/', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('swagger/', schema_view.with_ui('swagger',
-         cache_timeout=0), name='schema-swagger'),
 ]
