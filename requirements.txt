@@ -12,7 +12,6 @@ psycopg2-binary==2.9.7
 pycparser==2.21
 pycryptodomex==3.18.0
 PyJWT==2.8.0
-python-creditcard==0.0.1
 pytz==2023.3
 sqlparse==0.4.4
 typing-extensions==4.7.1
